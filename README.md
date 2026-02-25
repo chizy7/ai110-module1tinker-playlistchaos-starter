@@ -33,6 +33,13 @@ The logic behind the app, including:
 
 You will need to look at both files to understand how the app behaves.
 
+## Reflection: What I noticed and fixed
+
+- **Mood classification**: Some obviously "chill" songs (like ones with "lofi" or "ambient" in the title) were not being classified correctly because comparisons were case-sensitive. Normalized titles to lowercase when looking for chill keywords so classification matches the intended rules more reliably.
+- **Search**: The search function was effectively checking whether the full artist name was contained inside the query, instead of checking whether the query was contained inside the artist name. This made partial searches (like typing `"AC"`) feel unreliable. Flipped that comparison and kept everything case-insensitive, so partial matches behave as expected.
+- **Stats**: `hype_ratio` was computed as Hype songs divided by the number of Hype songs, and average energy used only Hype songs. Changed the stats to use the total number of unique songs for the denominator and to average the energy across all songs, so the numbers now line up with what you see in the playlists.
+- **Lucky pick**: The "any" mode only picked from Hype and Chill and would crash if there were no songs at all. Updated it to include Mixed songs in the pool and to safely return `None` on an empty playlist so the UI can show a friendly warning instead of failing.
+
 ---
 
 ## What you will do
